@@ -69,28 +69,33 @@ function calculate() {
   upperdisplay.innerHTML = x + ' ' + op + ' ' + y + ' ='; 
   x = operate(Number(x), Number(y), op).toString();
   y = '0';
-  op = undefined;
+  op = 'equal';
   display.innerHTML = x;
 }
 
 //Assign values to variables
 function assign(name) {
   if(isNaN(name)) {
-    if(op != undefined) {
+    if(op != undefined && op != 'equal') {
       calculate();
       upperdisplay.innerHTML = x + ' ' + op;
-      display.innerHTML = y;
     }
     op = name;
     console.log(x, y, op);
     upperdisplay.innerHTML = x + ' ' + op;
+    display.innerHTML = y;
     return;
   }
 
-  if(op != undefined) {
+  if(op != undefined && op != 'equal') {
     y != '0' ? y += name : y = name;
     display.innerHTML = y;
-  } else if(op == undefined) {
+  } else if(op == undefined || op == 'equal') {
+    if(op == 'equal'){
+      op = undefined;
+      x = '0';
+      upperdisplay.innerHTML = '';
+    }
     x != '0' ? x += name : x = name;
     display.innerHTML = x;
   }
@@ -114,16 +119,17 @@ function dlt() {
       y = '0';
       display.innerHTML = y;
     }
-  } else if(op != undefined && y == '0') {
+  } else if(op != undefined && op != 'equal' && y == '0') {
     op = undefined;
     upperdisplay.innerHTML = '';
     display.innerHTML = x;
-  } else if(op == undefined && y == '0') {
+  } else if((op == undefined || op == 'equal') && y == '0') {
     x = x.slice(0, -1);
     if(x.length == 0) {
       x = '0';
     }
     display.innerHTML = x;
+    upperdisplay.innerHTML = '';
   }
 }
 
