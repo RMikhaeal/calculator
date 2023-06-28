@@ -33,4 +33,13 @@ function operate(a, b, operator) {
   }
 }
 
-var x, y, op;
+function reply() {
+  const fname = this.id;
+  console.log(window[fname]());
+}
+
+const btns = document.querySelectorAll('button')
+
+btns.forEach(function(button) {
+  button.addEventListener('click', reply);
+});
