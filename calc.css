@@ -1,0 +1,11 @@
+.buttons {
+  display: flex;
+}
+
+.top-buttons {
+  display: flex;
+}
+
+button {
+  display: block;
+}
