@@ -14,6 +14,7 @@ function multiply(a, b) {
 function divide(a, b) {
   if(b == 0) {
     alert("You can't divide by 0");
+    clear();
     return;
   }
 
@@ -23,35 +24,39 @@ function divide(a, b) {
 function operate(a, b, operator) {
   
   switch (operator) {
-    case 'add':
+    case '+':
       return add(a, b);
-    case 'subtract':
+    case '-':
       return subtract(a, b);
-    case 'multiply':
+    case '\u00D7':
       return multiply(a, b);
-    case 'divide':
+    case '\u00F7':
       return divide(a, b);
   }
 }
 
 //Create calculator variables
-let x, y, op;
+let x = '0'; 
+let y = '0';
+let op;
 
 //Respond to button click
 function reply() {
-  const fname = this.id;
+  const fname = this.innerHTML;
   
-  if(fname == 'equal') {
-    x = operate(Number(x), Number(y), op).toString();
-    y = undefined;
-    op = undefined;
+  if(fname == '=') {
+    if(op == undefined) {
+      upperdisplay.innerHTML = x + ' =';
+      return;
+    }
+    calculate();
     console.log(x, y, op);
     return;
-  } else if(fname == 'clear') {
+  } else if(fname == 'CLEAR') {
     clear();
     console.log(x, y, op);
     return;
-  } else if(fname == 'del') {
+  } else if(fname == 'DELETE') {
     dlt();
     console.log(x, y, op);
     return;
@@ -60,42 +65,65 @@ function reply() {
   assign(fname);
 }
 
+function calculate() {  
+  upperdisplay.innerHTML = x + ' ' + op + ' ' + y + ' ='; 
+  x = operate(Number(x), Number(y), op).toString();
+  y = '0';
+  op = undefined;
+  display.innerHTML = x;
+}
+
 //Assign values to variables
 function assign(name) {
   if(isNaN(name)) {
+    if(op != undefined) {
+      calculate();
+      upperdisplay.innerHTML = x + ' ' + op;
+      display.innerHTML = y;
+    }
     op = name;
     console.log(x, y, op);
+    upperdisplay.innerHTML = x + ' ' + op;
     return;
   }
 
   if(op != undefined) {
-    y != undefined ? y += name : y = name;
+    y != '0' ? y += name : y = name;
+    display.innerHTML = y;
   } else if(op == undefined) {
-    x != undefined ? x += name : x = name;
+    x != '0' ? x += name : x = name;
+    display.innerHTML = x;
   }
 
   console.log(x, y, op);
 }
 
 function clear() {
-  x = undefined;
-  y = undefined;
+  x = '0';
+  y = '0';
   op = undefined;
+  display.innerHTML = x;
+  upperdisplay.innerHTML = '';
 }
 
 function dlt() {
-  if(y != undefined) {
+  if(y != '0') {
     y = y.slice(0, -1);
+    display.innerHTML = y;
     if(y.length == 0) {
-      y = undefined;
+      y = '0';
+      display.innerHTML = y;
     }
-  } else if(op != undefined && y == undefined) {
+  } else if(op != undefined && y == '0') {
     op = undefined;
-  } else if(op == undefined && y == undefined) {
+    upperdisplay.innerHTML = '';
+    display.innerHTML = x;
+  } else if(op == undefined && y == '0') {
     x = x.slice(0, -1);
     if(x.length == 0) {
-      x = undefined;
+      x = '0';
     }
+    display.innerHTML = x;
   }
 }
 
@@ -105,3 +133,6 @@ const btns = document.querySelectorAll('button')
 btns.forEach(function(button) {
   button.addEventListener('click', reply);
 });
+
+const display = document.getElementById("current");
+const upperdisplay = document.getElementById("eval");
