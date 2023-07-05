@@ -49,22 +49,72 @@ function operate(a, b, operator) {
 
 //Add event listeners
 values.forEach(function(button) {
-  button.addEventListener('onclick', value())
+  button.addEventListener('click', value)
 });
 operators.forEach(function(button) {
-  button.addEventListener('onclick', operator())
+  button.addEventListener('click', operator)
 });
-clr.addEventListener('onclick', clear());
-del.addEventListener('onclick', backspace());
-eql.addEventListener('onclick', equal());
+clr.addEventListener('click', clear);
+del.addEventListener('click', backspace);
+eql.addEventListener('click', equal);
 
 //Value function to input values
 function value() {
-  x += this.innerHTML;
+  if(this.id == 'deci' && !x.includes('.')) x += '.';
+  if(this.id != 'deci') {
+    x == '0' ? x = this.innerHTML : x += this.innerHTML;
+  }
+  screen(x);
 }
 
 //Operator function to select operation
 function operator() {
+  if(op != undefined && x != 0) {
+      y = operate(Number(y), Number(x), op).toString();
+  } else if (op === undefined) y = x;
+  x = '0';
   op = this.innerHTML;
-  y = x;
+  screen(y, op);
+}
+
+//Clear all values
+function clear() {
+  x = '0';
+  y = '0';
+  op = undefined;
+  screen();
+}
+
+//Clear Current Value
+function backspace() {
+  x = x.slice(0, -1);
+  if(x.length == 0) x = '0';
+  screen(x);
+}
+
+//Compute values
+function equal() {
+  screen(x, y, op);
+  x = operate(Number(y), Number(x), op).toString();
+  screen(x);
+  y = '0';
+  op = undefined;
+}
+
+//Update display
+function screen(d1, d2, d3) {
+  if(typeof d1 === 'undefined') {
+    upperdisplay.innerHTML = '';
+    display.innerHTML = '0';
+    return;
+  } else if(typeof d2 === 'undefined') {
+    display.innerHTML = d1;
+    return;
+  } else if(typeof d3 === 'undefined') {
+    upperdisplay.innerHTML = d1 + ' ' + d2;
+    display.innerHTML = '0';
+    return;
+  } else {
+    upperdisplay.innerHTML = d2 + ' ' + d3 + ' ' + d1 + ' =';
+  }
 }
