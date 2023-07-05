@@ -1,9 +1,31 @@
+body {
+  background-color: rgb(221, 221, 221);
+  display: flex;
+  justify-content: center;
+  flex: auto;
+}
+
 .buttons {
   display: flex;
+  flex: auto;
+}
+
+.column {
+  flex: auto;
+}
+
+.column > button {
+  width: 100%;
+  aspect-ratio : 1 / 1;
 }
 
 .top-buttons {
   display: flex;
+}
+
+#current, #eval {
+  justify-content: end;
+  display: flex
 }
 
 button {
