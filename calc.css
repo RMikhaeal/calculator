@@ -1,8 +1,27 @@
-body {
-  background-color: rgb(221, 221, 221);
-  display: flex;
-  justify-content: center;
-  flex: auto;
+body, button, .display {
+  background-color: rgb(236, 236, 236);
+}
+
+.container {
+  width: fit-content;
+  max-width: 125.188px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 14px;
+  background-color: darkgray;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.display {
+  border-width: 2px;
+  text-align: end;
+  max-height: 100%;
+  padding: 2px;
+}
+
+.container, .display {
+  border-style: solid;
+  border-radius: 4px;
 }
 
 .buttons {
@@ -14,7 +33,7 @@ body {
 .top-buttons {
   display: flex;
   gap: 10px;
-  margin-bottom: 10px;
+  margin: 10px 0;
   justify-content: space-between;
 }
 
@@ -24,11 +43,20 @@ body {
   width: 100%;
 }
 
-#current, #eval {
-  justify-content: end;
-  display: flex
+#del {
+  background-color: rgb(224, 156, 156);
 }
 
-button {
-  display: block;
+#clear {
+  background-color: rgb(163, 174, 224);
+}
+
+#current, #eval {
+  width: 100%;
+  word-wrap: break-word;
+}
+
+#eval {
+  font-size: x-small;
+  margin-bottom: 1px;
 }
