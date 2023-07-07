@@ -94,6 +94,7 @@ function backspace() {
 
 //Compute values
 function equal() {
+  if(op === undefined) return;
   screen(x, y, op);
   x = operate(Number(y), Number(x), op).toString();
   screen(x);
@@ -104,7 +105,7 @@ function equal() {
 //Update display
 function screen(d1, d2, d3) {
   if(typeof d1 === 'undefined') {
-    upperdisplay.innerHTML = '';
+    upperdisplay.innerHTML = '&nbsp';
     display.innerHTML = '0';
     return;
   } else if(typeof d2 === 'undefined') {
